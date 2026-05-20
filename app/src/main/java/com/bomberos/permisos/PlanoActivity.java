@@ -169,8 +169,7 @@ public class PlanoActivity extends AppCompatActivity {
             layoutHerramientas.setVisibility(View.GONE);
             tvHerramientasVacio.setVisibility(View.GONE);
 
-            String param = android.net.Uri.encode(String.join(",", tipos));
-            api.get("inventario?tipos_trabajo=" + param + "&estado=DISPONIBLE&activo=true",
+            api.get("inventario?estado=DISPONIBLE&activo=true",
                     response -> {
                         progressHerramientas.setVisibility(View.GONE);
                         try {

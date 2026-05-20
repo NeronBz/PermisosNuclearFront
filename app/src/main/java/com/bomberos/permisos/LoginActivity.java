@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bomberos.permisos.utils.ApiHelper;
 import com.bomberos.permisos.utils.SessionManager;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.JSONObject;
 
@@ -92,6 +93,14 @@ public class LoginActivity extends AppCompatActivity {
                     usuario.optString("documento", ""),
                     usuario.optString("cargo", "")
             );
+
+            FirebaseMessaging.getInstance().getToken().addOnSuccessListener(fcmToken -> {
+                try {
+                    JSONObject cuerpoFcm = new JSONObject();
+                    cuerpoFcm.put("token", fcmToken);
+                    api.post("auth/fcm-token", cuerpoFcm, r -> {}, e -> {});
+                } catch (Exception ignored) {}
+            });
 
             Intent intent = new Intent(this, HomeActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

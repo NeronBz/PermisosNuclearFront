@@ -1,23 +1,37 @@
 package com.bomberos.permisos;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import com.bomberos.permisos.service.PinselesFirebaseService;
 import com.bomberos.permisos.utils.SessionManager;
 
 public class HomeActivity extends AppCompatActivity {
 
     private SessionManager session;
 
+    private final ActivityResultLauncher<String> permisosNotif =
+            registerForActivityResult(new ActivityResultContracts.RequestPermission(), granted -> {});
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        crearCanalNotificacion();
+        pedirPermisoNotificaciones();
 
         session = new SessionManager(this);
 
@@ -50,6 +64,28 @@ public class HomeActivity extends AppCompatActivity {
                     startActivity(new Intent(this, UsuariosActivity.class)));
         } else {
             btnUsuarios.setVisibility(View.GONE);
+        }
+    }
+
+    private void crearCanalNotificacion() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel canal = new NotificationChannel(
+                    PinselesFirebaseService.CANAL_ID,
+                    PinselesFirebaseService.CANAL_NOMBRE,
+                    NotificationManager.IMPORTANCE_HIGH);
+            canal.setDescription("Notificaciones de cambios en permisos PTRI");
+            NotificationManager nm = getSystemService(NotificationManager.class);
+            if (nm != null) nm.createNotificationChannel(canal);
+        }
+    }
+
+    private void pedirPermisoNotificaciones() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this,
+                    android.Manifest.permission.POST_NOTIFICATIONS)
+                    != PackageManager.PERMISSION_GRANTED) {
+                permisosNotif.launch(android.Manifest.permission.POST_NOTIFICATIONS);
+            }
         }
     }
 

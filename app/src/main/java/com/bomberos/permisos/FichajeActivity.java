@@ -128,7 +128,7 @@ public class FichajeActivity extends AppCompatActivity {
                     if (location != null) {
                         lastLat = location.getLatitude();
                         lastLng = location.getLongitude();
-                        tvGps.setText(getString(R.string.fichaje_gps_ok));
+                        tvGps.setText(String.format("📍 %.5f, %.5f", lastLat, lastLng));
                     } else {
                         tvGps.setText(getString(R.string.fichaje_gps_error));
                     }
@@ -204,6 +204,7 @@ public class FichajeActivity extends AppCompatActivity {
                 coordenadas.put(lastLat);
                 coordenadas.put(lastLng);
                 cuerpo.put("coordenadas", coordenadas);
+                cuerpo.put("ubicacion", String.format("%.5f, %.5f", lastLat, lastLng));
             }
 
             api.post("fichajes/entrada", cuerpo,
