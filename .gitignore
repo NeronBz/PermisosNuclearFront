@@ -1,0 +1,16 @@
+# Google Services — contiene claves Firebase, NO subir al repo
+app/google-services.json
+
+# Android build
+*.iml
+.gradle/
+/local.properties
+/.idea/
+.DS_Store
+build/
+app/build/
+/captures/
+.externalNativeBuild/
+.cxx/
+*.apk
+*.aab

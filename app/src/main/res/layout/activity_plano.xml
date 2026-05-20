@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- FrameLayout: los botones de zona se posicionan encima del "mapa" mediante coordenadas % -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mapaContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F5DC">
+
+    <!-- Botones de zona: posición final se asigna en onCreate() mediante post() -->
+    <Button
+        android:id="@+id/btnReactor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reactor"
+        android:backgroundTint="@color/nuclear_blue"
+        android:textColor="@color/white" />
+
+    <Button
+        android:id="@+id/btnTurbina"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Turbina"
+        android:backgroundTint="@color/nuclear_blue"
+        android:textColor="@color/white" />
+
+    <Button
+        android:id="@+id/btnAlmacen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Almacén"
+        android:backgroundTint="@color/nuclear_blue"
+        android:textColor="@color/white" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
+    <!-- FAB volver -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabVolver"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|start"
+        android:layout_margin="12dp"
+        android:contentDescription="Volver"
+        app:fabSize="mini"
+        app:srcCompat="@drawable/ic_arrow_back"
+        app:backgroundTint="@color/nuclear_blue" />
+
+</FrameLayout>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_light">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="8dp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tvEstado"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/tvGps"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:gravity="center"
+            android:layout_marginBottom="16dp"
+            android:textColor="@color/grey_done" />
+
+        <!-- Sección: fichaje abierto -->
+        <LinearLayout
+            android:id="@+id/layoutAbierto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:padding="16dp"
+            android:layout_marginBottom="12dp"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tvHoraEntrada"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="@color/safe_green"
+                android:layout_marginBottom="12dp" />
+
+            <Button
+                android:id="@+id/btnSalida"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/fichaje_btn_salida"
+                android:backgroundTint="@color/danger_red"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+        <!-- Sección: sin fichaje -->
+        <LinearLayout
+            android:id="@+id/layoutCerrado"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:padding="16dp"
+            android:layout_marginBottom="12dp"
+            android:visibility="gone">
+
+            <CheckBox
+                android:id="@+id/cbRecarga"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/fichaje_turno_recarga"
+                android:layout_marginBottom="12dp" />
+
+            <Button
+                android:id="@+id/btnEntrada"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/fichaje_btn_entrada"
+                android:backgroundTint="@color/safe_green"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+        <!-- Historial -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Historial reciente"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:textColor="@color/nuclear_blue"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/tvHistorialVacio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/fichaje_historial_vacio"
+            android:textColor="@color/grey_cancelled"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/layoutHistorial"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+
+    </LinearLayout>
+</ScrollView>

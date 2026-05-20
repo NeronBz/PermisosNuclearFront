@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_light">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <EditText
+            android:id="@+id/etEdificio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/nuevo_edificio_hint"
+            android:inputType="text"
+            android:layout_marginBottom="12dp" />
+
+        <EditText
+            android:id="@+id/etCota"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/nuevo_cota_hint"
+            android:inputType="text"
+            android:layout_marginBottom="12dp" />
+
+        <EditText
+            android:id="@+id/etZonaFuego"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/nuevo_zona_fuego_hint"
+            android:inputType="text"
+            android:layout_marginBottom="12dp" />
+
+        <EditText
+            android:id="@+id/etDescripcion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/nuevo_descripcion_hint"
+            android:inputType="textMultiLine"
+            android:minLines="2"
+            android:layout_marginBottom="12dp" />
+
+        <EditText
+            android:id="@+id/etResponsable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/nuevo_responsable_hint"
+            android:inputType="text"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/nuevo_tipos_trabajo"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:layout_marginBottom="8dp" />
+
+        <CheckBox android:id="@+id/cbSoldaduraElectrica"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="@string/tipo_soldadura_electrica" />
+        <CheckBox android:id="@+id/cbSoldaduraTig"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="@string/tipo_soldadura_tig" />
+        <CheckBox android:id="@+id/cbCorteRadial"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="@string/tipo_corte_radial" />
+        <CheckBox android:id="@+id/cbLanzaTermica"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="@string/tipo_lanza_termica" />
+        <CheckBox android:id="@+id/cbSoplete"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="@string/tipo_corte_soplete" />
+        <CheckBox android:id="@+id/cbDistensionado"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="@string/tipo_distensionado" />
+        <CheckBox android:id="@+id/cbOtros"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="@string/tipo_otros"
+            android:layout_marginBottom="16dp" />
+
+        <CheckBox
+            android:id="@+id/cbZonaControlada"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Zona controlada (acceso restringido)"
+            android:layout_marginBottom="24dp" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="8dp"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/btnEnviar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/nuevo_btn_enviar"
+            android:backgroundTint="@color/nuclear_blue"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+</ScrollView>

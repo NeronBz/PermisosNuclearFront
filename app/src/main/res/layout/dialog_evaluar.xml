@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Medidas de seguridad PCI:"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Los checkboxes de medidas se añaden dinámicamente en PermisosActivity -->
+        <LinearLayout
+            android:id="@+id/layoutMedidasPci"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="16dp" />
+
+        <EditText
+            android:id="@+id/etMediosPci"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Medios PCI disponibles en la zona (ej: Extintor CO₂, BIE)"
+            android:inputType="text"
+            android:layout_marginBottom="12dp" />
+
+        <EditText
+            android:id="@+id/etPrecauciones"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Precauciones especiales (opcional)"
+            android:inputType="textMultiLine"
+            android:minLines="2" />
+
+    </LinearLayout>
+</ScrollView>

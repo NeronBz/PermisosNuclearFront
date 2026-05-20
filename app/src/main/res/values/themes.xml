@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.PinSeles" parent="Theme.MaterialComponents.Light.DarkActionBar">
+        <item name="colorPrimary">@color/nuclear_blue</item>
+        <item name="colorPrimaryDark">@color/nuclear_blue_dark</item>
+        <item name="colorAccent">@color/safe_green</item>
+        <item name="android:windowBackground">@color/background_light</item>
+    </style>
+
+    <style name="Theme.PinSeles.NoActionBar" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/nuclear_blue</item>
+        <item name="colorPrimaryDark">@color/nuclear_blue_dark</item>
+        <item name="colorAccent">@color/safe_green</item>
+        <item name="android:windowBackground">@color/background_light</item>
+    </style>
+
+    <style name="CardStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:background">@color/card_background</item>
+        <item name="android:elevation">2dp</item>
+    </style>
+</resources>

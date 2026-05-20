@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Hora de apertura"
+            android:textSize="11sp"
+            android:textColor="@color/nuclear_blue" />
+
+        <TextView
+            android:id="@+id/tvHoraActual"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Solicitante"
+            android:textSize="11sp"
+            android:textColor="@color/nuclear_blue" />
+
+        <TextView
+            android:id="@+id/tvSolicitante"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Zona"
+            android:textSize="11sp"
+            android:textColor="@color/nuclear_blue" />
+
+        <TextView
+            android:id="@+id/tvZona"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Zona controlada (acceso restringido)"
+                android:textSize="14sp" />
+
+            <Switch
+                android:id="@+id/switchZonaControlada"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/etResponsable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="Responsable en zona (opcional)"
+            android:inputType="textPersonName"
+            android:maxLines="1" />
+
+        <EditText
+            android:id="@+id/etDescripcion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="Descripción del trabajo"
+            android:inputType="textMultiLine"
+            android:minLines="2"
+            android:maxLines="4" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Tipo de trabajo con riesgo de incendio:"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="@color/nuclear_blue" />
+
+        <CheckBox android:id="@+id/cbSoldaduraElectrica"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="Soldadura eléctrica" android:textSize="13sp" />
+        <CheckBox android:id="@+id/cbSoldaduraTig"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="Soldadura TIG/MIG" android:textSize="13sp" />
+        <CheckBox android:id="@+id/cbCorteRadial"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="Corte radial / amoladora" android:textSize="13sp" />
+        <CheckBox android:id="@+id/cbLanzaTermica"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="Lanza térmica" android:textSize="13sp" />
+        <CheckBox android:id="@+id/cbCorteSoplete"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="Corte con soplete" android:textSize="13sp" />
+        <CheckBox android:id="@+id/cbDistensionado"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="Distensionado" android:textSize="13sp" />
+        <CheckBox android:id="@+id/cbOtros"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="Otros trabajos con riesgo de incendio" android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/tvHerramientasLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Herramientas a utilizar:"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="@color/nuclear_blue"
+            android:visibility="gone" />
+
+        <ProgressBar
+            android:id="@+id/progressHerramientas"
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/layoutHerramientas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tvHerramientasVacio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="No hay herramientas disponibles para los tipos seleccionados"
+            android:textSize="12sp"
+            android:textColor="@color/grey_done"
+            android:visibility="gone" />
+
+        <Space android:layout_width="match_parent" android:layout_height="8dp" />
+
+    </LinearLayout>
+</ScrollView>

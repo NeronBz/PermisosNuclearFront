@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PinSeles</string>
+
+    <!-- Login -->
+    <string name="login_titulo">PIN-SELES</string>
+    <string name="login_subtitulo">Gestión de Permisos — Bomberos CN Almaraz</string>
+    <string name="login_hint_identificador">Email o documento</string>
+    <string name="login_hint_password">Contraseña</string>
+    <string name="login_btn">Entrar</string>
+    <string name="login_footer">Acceso restringido al personal autorizado</string>
+
+    <!-- Home -->
+    <string name="home_permisos">PTRI — Permisos</string>
+    <string name="home_fichaje">Fichaje</string>
+    <string name="home_perfil">Mi perfil</string>
+    <string name="home_usuarios">Gestión de usuarios</string>
+    <string name="home_cerrar_sesion">Cerrar sesión</string>
+
+    <!-- Permisos -->
+    <string name="permisos_titulo">Permisos PTRI</string>
+    <string name="permisos_nuevo">+ Nuevo PTRI</string>
+    <string name="permisos_vacio">No hay permisos disponibles</string>
+    <string name="permisos_historial">Ver historial completo</string>
+    <string name="permisos_activos">Ver solo activos</string>
+
+    <!-- Nuevo permiso -->
+    <string name="nuevo_titulo">Nuevo PTRI</string>
+    <string name="nuevo_edificio_hint">Edificio / Zona *</string>
+    <string name="nuevo_cota_hint">Cota (opcional)</string>
+    <string name="nuevo_zona_fuego_hint">Zona de fuego (opcional)</string>
+    <string name="nuevo_descripcion_hint">Descripción del trabajo</string>
+    <string name="nuevo_responsable_hint">Responsable en zona</string>
+    <string name="nuevo_tipos_trabajo">Tipos de trabajo con riesgo de incendio:</string>
+    <string name="nuevo_btn_enviar">Enviar solicitud</string>
+    <string name="tipo_soldadura_electrica">Soldadura eléctrica</string>
+    <string name="tipo_soldadura_tig">Soldadura TIG/MIG</string>
+    <string name="tipo_corte_radial">Corte radial / amoladora</string>
+    <string name="tipo_lanza_termica">Lanza térmica</string>
+    <string name="tipo_corte_soplete">Corte con soplete</string>
+    <string name="tipo_distensionado">Distensionado</string>
+    <string name="tipo_otros">Otros trabajos con riesgo de incendio</string>
+
+    <!-- Medidas PCI -->
+    <string name="pci_retirar">Retirar material combustible de la zona</string>
+    <string name="pci_apantallar">Apantallar con material ignífugo</string>
+    <string name="pci_proteger_aberturas">Proteger aberturas y pasos adyacentes</string>
+    <string name="pci_acopio">Sin acopio de material combustible</string>
+    <string name="pci_desplazamiento">Trabajos con desplazamiento múltiple</string>
+    <string name="pci_mantener_limpio">Mantener la zona libre de combustibles</string>
+    <string name="pci_avisar">Avisar al PCI-EC al finalizar el trabajo</string>
+    <string name="pci_proteger_equipos">Proteger equipos y materiales adyacentes</string>
+    <string name="pci_atex">Zona ATEX — precauciones adicionales</string>
+    <string name="pci_vigilancia">Vigilancia continua del PTRI</string>
+
+    <!-- Fichaje -->
+    <string name="fichaje_titulo">Fichaje</string>
+    <string name="fichaje_btn_entrada">Registrar entrada</string>
+    <string name="fichaje_btn_salida">Registrar salida</string>
+    <string name="fichaje_activo">Turno en curso</string>
+    <string name="fichaje_sin_entrada">Sin fichaje activo</string>
+    <string name="fichaje_turno_recarga">Turno de recarga (12 h)</string>
+    <string name="fichaje_gps_ok">📍 Ubicación lista</string>
+    <string name="fichaje_gps_error">📍 No se pudo obtener ubicación</string>
+    <string name="fichaje_gps_sin_permiso">📍 Sin permiso de ubicación</string>
+    <string name="fichaje_gps_obteniendo">📍 Obteniendo ubicación…</string>
+    <string name="fichaje_historial_vacio">Sin registros recientes</string>
+
+    <!-- Perfil -->
+    <string name="perfil_titulo">Mi perfil</string>
+    <string name="perfil_cerrar_sesion">Cerrar sesión</string>
+    <string name="perfil_logout_confirm">¿Seguro que quieres cerrar la sesión?</string>
+
+    <!-- Usuarios -->
+    <string name="usuarios_titulo">Gestión de usuarios</string>
+    <string name="usuarios_nuevo">+ Nuevo usuario</string>
+    <string name="usuarios_vacio">No hay usuarios registrados</string>
+    <string name="usuario_nombre_hint">Nombre completo *</string>
+    <string name="usuario_doc_hint">DNI / Documento *</string>
+    <string name="usuario_email_hint">Email *</string>
+    <string name="usuario_pass_hint">Contraseña (mín. 8 caracteres) *</string>
+    <string name="usuario_cargo_hint">Cargo (opcional)</string>
+
+    <!-- Acciones generales -->
+    <string name="btn_cancelar">Cancelar</string>
+    <string name="btn_aceptar">Aceptar</string>
+    <string name="btn_guardar">Guardar</string>
+    <string name="btn_reintentar">Reintentar</string>
+    <string name="btn_borrar">Borrar</string>
+
+    <!-- Motivos -->
+    <string name="hint_motivo_rechazo">Motivo del rechazo *</string>
+    <string name="hint_motivo_anulacion">Motivo de anulación (opcional)</string>
+</resources>

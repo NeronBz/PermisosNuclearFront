@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="nuclear_blue">#1565C0</color>
+    <color name="nuclear_blue_dark">#0D47A1</color>
+    <color name="safe_green">#2E7D32</color>
+    <color name="warning_orange">#F57C00</color>
+    <color name="danger_red">#C62828</color>
+    <color name="purple_work">#6A1B9A</color>
+    <color name="grey_done">#546E7A</color>
+    <color name="grey_cancelled">#757575</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="background_light">#F5F5F5</color>
+    <color name="card_background">#FFFFFF</color>
+    <color name="alert_red">#D32F2F</color>
+</resources>

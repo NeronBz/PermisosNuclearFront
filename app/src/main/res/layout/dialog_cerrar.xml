@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <CheckBox
+        android:id="@+id/cbInspeccionFinal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Inspección final de la zona realizada"
+        android:layout_marginBottom="8dp" />
+
+    <CheckBox
+        android:id="@+id/cbAvisoSalaCierre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Aviso a sala de control al cierre"
+        android:layout_marginBottom="8dp" />
+
+    <CheckBox
+        android:id="@+id/cbNoSeRealiza"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="El trabajo no se llegó a realizar"
+        android:layout_marginBottom="12dp" />
+
+    <EditText
+        android:id="@+id/etObservaciones"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Observaciones de cierre (opcional)"
+        android:inputType="textMultiLine"
+        android:minLines="2" />
+
+</LinearLayout>

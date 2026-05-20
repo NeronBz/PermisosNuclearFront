@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/etExtintor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nº extintor asignado (opcional)"
+        android:inputType="text"
+        android:layout_marginBottom="12dp" />
+
+    <CheckBox
+        android:id="@+id/cbInspeccionInicial"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Inspección inicial de la zona realizada"
+        android:layout_marginBottom="8dp" />
+
+    <CheckBox
+        android:id="@+id/cbAvisoSalaInicio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Aviso a sala de control al inicio" />
+
+</LinearLayout>
