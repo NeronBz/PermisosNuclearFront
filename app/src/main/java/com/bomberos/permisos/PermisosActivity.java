@@ -1,5 +1,4 @@
 package com.bomberos.permisos;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
@@ -27,9 +26,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-
 public class PermisosActivity extends AppCompatActivity {
-
     private ProgressBar progressBar;
     private TextView tvVacio;
     private TextView tvError;
@@ -37,16 +34,13 @@ public class PermisosActivity extends AppCompatActivity {
     private ListView listView;
     private Button btnNuevo;
     private Button btnHistorial;
-
     private SessionManager session;
     private ApiHelper api;
     private DatabaseHelper db;
     private String rol;
     private boolean mostrandoTodos = false;
-
     private final List<JSONObject> listaPermisos = new ArrayList<>();
     private PermisosAdapter adapter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,23 +58,19 @@ public class PermisosActivity extends AppCompatActivity {
         listView = findViewById(R.id.listViewPermisos);
         btnNuevo = findViewById(R.id.btnNuevo);
         btnHistorial = findViewById(R.id.btnHistorial);
-
         session = new SessionManager(this);
         api = ApiHelper.getInstance(this);
         db = DatabaseHelper.getInstance(this);
         rol = session.getRol();
-
         adapter = new PermisosAdapter(this, listaPermisos, rol, this::onAccionPermiso);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener((parent, view, position, id) ->
                 mostrarDetallePermiso(listaPermisos.get(position)));
-
         if ("SOLICITANTE".equals(rol) || "ADMIN".equals(rol)) {
             btnNuevo.setVisibility(View.VISIBLE);
             btnNuevo.setOnClickListener(v ->
                     startActivity(new Intent(this, PlanoActivity.class)));
         }
-
         if ("JEFE".equals(rol) || "ADMIN".equals(rol)) {
             btnHistorial.setVisibility(View.VISIBLE);
             btnHistorial.setOnClickListener(v -> {
@@ -98,13 +88,11 @@ public class PermisosActivity extends AppCompatActivity {
         super.onResume();
         cargarPermisos();
     }
-
     @Override
     public boolean onSupportNavigateUp() {
         finish();
         return true;
     }
-
     private void cargarPermisos() {
         mostrarEstado("cargando");
 
@@ -162,7 +150,6 @@ public class PermisosActivity extends AppCompatActivity {
                 "lista".equals(estado) || "lista_offline".equals(estado)
                         ? View.VISIBLE : View.GONE);
     }
-
     private void mostrarDetallePermiso(JSONObject permiso) {
         try {
             String estado = permiso.optString("estado", "");
@@ -199,7 +186,6 @@ public class PermisosActivity extends AppCompatActivity {
             Toast.makeText(this, "Error al mostrar detalle", Toast.LENGTH_SHORT).show();
         }
     }
-
     private void onAccionPermiso(String accion, JSONObject permiso) {
         try {
             String id = permiso.getString("_id");
@@ -216,10 +202,8 @@ public class PermisosActivity extends AppCompatActivity {
             Toast.makeText(this, "Error inesperado", Toast.LENGTH_SHORT).show();
         }
     }
-
     private void mostrarDialogoEvaluar(String id) {
         View vista = getLayoutInflater().inflate(R.layout.dialog_evaluar, null);
-
         String[][] medidasDef = {
             {"RETIRAR_COMBUSTIBLE",    "Retirar material combustible de la zona"},
             {"APANTALLAR_IGNIFUGO",    "Apantallar con material ignífugo"},
@@ -232,7 +216,6 @@ public class PermisosActivity extends AppCompatActivity {
             {"ZONA_ATEX",              "Zona ATEX — precauciones adicionales"},
             {"VIGILANCIA_CONTINUA",    "Vigilancia continua del PTRI"}
         };
-
         LinearLayout layoutMedidas = vista.findViewById(R.id.layoutMedidasPci);
         List<CheckBox> checkboxes = new ArrayList<>();
         for (String[] medida : medidasDef) {
@@ -242,10 +225,8 @@ public class PermisosActivity extends AppCompatActivity {
             layoutMedidas.addView(cb);
             checkboxes.add(cb);
         }
-
         EditText etMedios = vista.findViewById(R.id.etMediosPci);
         EditText etPrecauciones = vista.findViewById(R.id.etPrecauciones);
-
         new AlertDialog.Builder(this)
                 .setTitle("Evaluación PCI — PTRI")
                 .setView(vista)
