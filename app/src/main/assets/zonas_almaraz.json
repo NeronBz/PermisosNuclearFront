@@ -1,0 +1,169 @@
+{
+  "_comentario": "Configuración de zonas del plano CN Almaraz para PIN-SELES. Los identificadores 'zona-reactor', 'zona-turbina' y 'zona-almacen' se mantienen idénticos a los originales para no romper datos previos del backend.",
+  "viewport": {
+    "ancho": 1200,
+    "alto": 800
+  },
+  "zonas": [
+    {
+      "id": "zona-reactor",
+      "nombre": "Reactor Unidad I",
+      "tipo": "REACTOR",
+      "x": 260,
+      "y": 280,
+      "criticidad": "ALTA"
+    },
+    {
+      "id": "zona-reactor-2",
+      "nombre": "Reactor Unidad II",
+      "tipo": "REACTOR",
+      "x": 800,
+      "y": 280,
+      "criticidad": "ALTA"
+    },
+    {
+      "id": "zona-turbina",
+      "nombre": "Turbinas Unidad I",
+      "tipo": "TURBINA",
+      "x": 170,
+      "y": 280,
+      "criticidad": "MEDIA"
+    },
+    {
+      "id": "zona-turbina-2",
+      "nombre": "Turbinas Unidad II",
+      "tipo": "TURBINA",
+      "x": 895,
+      "y": 280,
+      "criticidad": "MEDIA"
+    },
+    {
+      "id": "zona-auxiliar-1",
+      "nombre": "Edificio Auxiliar I",
+      "tipo": "AUXILIAR",
+      "x": 375,
+      "y": 280,
+      "criticidad": "MEDIA"
+    },
+    {
+      "id": "zona-auxiliar-2",
+      "nombre": "Edificio Auxiliar II",
+      "tipo": "AUXILIAR",
+      "x": 700,
+      "y": 280,
+      "criticidad": "MEDIA"
+    },
+    {
+      "id": "zona-combustible-1",
+      "nombre": "Combustible Gastado I",
+      "tipo": "COMBUSTIBLE",
+      "x": 375,
+      "y": 182,
+      "criticidad": "ALTA"
+    },
+    {
+      "id": "zona-combustible-2",
+      "nombre": "Combustible Gastado II",
+      "tipo": "COMBUSTIBLE",
+      "x": 700,
+      "y": 182,
+      "criticidad": "ALTA"
+    },
+    {
+      "id": "zona-sala-control",
+      "nombre": "Sala de Control",
+      "tipo": "CONTROL",
+      "x": 530,
+      "y": 260,
+      "criticidad": "ALTA"
+    },
+    {
+      "id": "zona-diesel-a",
+      "nombre": "Generador Diésel A",
+      "tipo": "DIESEL",
+      "x": 487,
+      "y": 347,
+      "criticidad": "MEDIA"
+    },
+    {
+      "id": "zona-diesel-b",
+      "nombre": "Generador Diésel B",
+      "tipo": "DIESEL",
+      "x": 577,
+      "y": 347,
+      "criticidad": "MEDIA"
+    },
+    {
+      "id": "zona-subestacion",
+      "nombre": "Subestación 400 kV",
+      "tipo": "ELECTRICA",
+      "x": 1020,
+      "y": 215,
+      "criticidad": "MEDIA"
+    },
+    {
+      "id": "zona-administracion",
+      "nombre": "Edificio Administración",
+      "tipo": "ADMINISTRACION",
+      "x": 1020,
+      "y": 360,
+      "criticidad": "BAJA"
+    },
+    {
+      "id": "zona-rwst",
+      "nombre": "Tanque RWST",
+      "tipo": "TANQUE",
+      "x": 155,
+      "y": 510,
+      "criticidad": "MEDIA"
+    },
+    {
+      "id": "zona-pci",
+      "nombre": "Tanque Contra Incendios",
+      "tipo": "TANQUE",
+      "x": 240,
+      "y": 510,
+      "criticidad": "ALTA"
+    },
+    {
+      "id": "zona-bombas-agua",
+      "nombre": "Bombas Agua Servicios",
+      "tipo": "BOMBAS",
+      "x": 430,
+      "y": 527,
+      "criticidad": "MEDIA"
+    },
+    {
+      "id": "zona-toma-agua",
+      "nombre": "Toma Agua Embalse",
+      "tipo": "BOMBAS",
+      "x": 555,
+      "y": 527,
+      "criticidad": "MEDIA"
+    },
+    {
+      "id": "zona-almacen",
+      "nombre": "Almacén General",
+      "tipo": "ALMACEN",
+      "x": 700,
+      "y": 527,
+      "criticidad": "BAJA"
+    },
+    {
+      "id": "zona-accesos",
+      "nombre": "Control de Accesos",
+      "tipo": "CONTROL_ACCESOS",
+      "x": 830,
+      "y": 527,
+      "criticidad": "MEDIA"
+    },
+    {
+      "id": "zona-bomberos",
+      "nombre": "Parque de Bomberos",
+      "tipo": "BOMBEROS",
+      "x": 990,
+      "y": 545,
+      "criticidad": "BASE"
+    }
+  ]
+}

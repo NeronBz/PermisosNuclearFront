@@ -1,36 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- FrameLayout: los botones de zona se posicionan encima del "mapa" mediante coordenadas % -->
+<!--
+    activity_plano.xml
+    Plano interactivo de la CN Almaraz.
+    Los botones de zona se generan dinámicamente en PlanoActivity.crearBotonesZona()
+    y se posicionan encima del ImageView usando PlanoCoordMapper.
+-->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/mapaContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5DC">
+    android:background="@color/background_light">
 
-    <!-- Botones de zona: posición final se asigna en onCreate() mediante post() -->
-    <Button
-        android:id="@+id/btnReactor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Reactor"
-        android:backgroundTint="@color/nuclear_blue"
-        android:textColor="@color/white" />
+    <!-- Fondo del plano. scaleType fitCenter es OBLIGATORIO para que
+         PlanoCoordMapper calcule las posiciones correctamente. -->
+    <ImageView
+        android:id="@+id/planoImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:adjustViewBounds="true"
+        android:contentDescription="Plano esquemático CN Almaraz"
+        android:scaleType="fitCenter"
+        android:src="@drawable/plano_almaraz" />
 
-    <Button
-        android:id="@+id/btnTurbina"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Turbina"
-        android:backgroundTint="@color/nuclear_blue"
-        android:textColor="@color/white" />
-
-    <Button
-        android:id="@+id/btnAlmacen"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Almacén"
-        android:backgroundTint="@color/nuclear_blue"
-        android:textColor="@color/white" />
+    <!-- Los botones de zona se añaden aquí desde código -->
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -39,7 +32,6 @@
         android:layout_gravity="center"
         android:visibility="gone" />
 
-    <!-- FAB volver -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabVolver"
         android:layout_width="wrap_content"
@@ -47,8 +39,8 @@
         android:layout_gravity="top|start"
         android:layout_margin="12dp"
         android:contentDescription="Volver"
+        app:backgroundTint="@color/nuclear_blue"
         app:fabSize="mini"
-        app:srcCompat="@drawable/ic_arrow_back"
-        app:backgroundTint="@color/nuclear_blue" />
+        app:srcCompat="@drawable/ic_arrow_back" />
 
 </FrameLayout>
