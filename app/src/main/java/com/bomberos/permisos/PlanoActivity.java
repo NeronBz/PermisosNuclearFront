@@ -1,13 +1,18 @@
 package com.bomberos.permisos;
 
 import android.content.res.ColorStateList;
+import android.graphics.PointF;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Switch;
@@ -19,68 +24,174 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.bomberos.permisos.utils.ApiHelper;
+import com.bomberos.permisos.utils.PlanoCoordMapper;
 import com.bomberos.permisos.utils.SessionManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
+/**
+ * PlanoActivity
+ * --------------------------------------------------------------------------
+ * Muestra el plano esquemático de la CN Almaraz con un botón por cada zona
+ * operativa cargada desde assets/zonas_almaraz.json. Al pulsar una zona se
+ * abre el formulario de permiso (sin cambios respecto a la versión previa).
+ *
+ * Los botones se colorean según haya o no permisos activos en esa zona,
+ * usando los mismos estados que la actividad anterior.
+ */
 public class PlanoActivity extends AppCompatActivity {
 
-    private static final String ZONA_REACTOR = "zona-reactor";
-    private static final String ZONA_TURBINA = "zona-turbina";
-    private static final String ZONA_ALMACEN = "zona-almacen";
+    private static final String TAG = "PlanoActivity";
 
     private static final List<String> ESTADOS_ACTIVOS = Arrays.asList(
             "PENDIENTE", "EVALUADO", "AUTORIZADO", "EN_EJECUCION");
 
     private FrameLayout mapaContainer;
-    private Button btnReactor;
-    private Button btnTurbina;
-    private Button btnAlmacen;
+    private ImageView planoImage;
     private ProgressBar progressBar;
 
     private ApiHelper api;
     private SessionManager session;
 
+    /** Botones generados dinámicamente, indexados por zonaId. */
+    private final Map<String, Button> botonesZona = new HashMap<>();
+
+    /** Configuración de zonas cargada desde assets/zonas_almaraz.json. */
+    private final List<Zona> zonas = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Forzar landscape: el plano tiene aspect ratio 3:2 y se aprovecha
+        // mucho mejor en horizontal. El resto de la app sigue en portrait.
+        setRequestedOrientation(
+                android.content.pm.ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plano);
 
         if (getSupportActionBar() != null) getSupportActionBar().hide();
 
         mapaContainer = findViewById(R.id.mapaContainer);
-        btnReactor = findViewById(R.id.btnReactor);
-        btnTurbina = findViewById(R.id.btnTurbina);
-        btnAlmacen = findViewById(R.id.btnAlmacen);
-        progressBar = findViewById(R.id.progressBar);
+        planoImage    = findViewById(R.id.planoImage);
+        progressBar   = findViewById(R.id.progressBar);
 
         FloatingActionButton fabVolver = findViewById(R.id.fabVolver);
         fabVolver.setOnClickListener(v -> finish());
 
-        api = ApiHelper.getInstance(this);
+        api     = ApiHelper.getInstance(this);
         session = new SessionManager(this);
 
-        mapaContainer.post(() -> {
-            posicionarBoton(btnReactor, 0.18f, 0.25f);
-            posicionarBoton(btnTurbina, 0.55f, 0.42f);
-            posicionarBoton(btnAlmacen, 0.72f, 0.68f);
+        cargarZonasDesdeAssets();
+
+        // Esperar a que el ImageView tenga dimensiones reales antes de
+        // posicionar los botones encima
+        planoImage.post(() -> {
+            crearBotonesZona();
+            cargarEstadoZonas();
         });
-
-        btnReactor.setOnClickListener(v -> mostrarFormulario(ZONA_REACTOR, "Reactor"));
-        btnTurbina.setOnClickListener(v -> mostrarFormulario(ZONA_TURBINA, "Turbina"));
-        btnAlmacen.setOnClickListener(v -> mostrarFormulario(ZONA_ALMACEN, "Almacén"));
-
-        cargarEstadoZonas();
     }
+
+    // ===================================================================
+    //   CARGA DE ZONAS DESDE assets/zonas_almaraz.json
+    // ===================================================================
+
+    private void cargarZonasDesdeAssets() {
+        zonas.clear();
+        try (BufferedReader br = new BufferedReader(
+                new InputStreamReader(
+                        getAssets().open("zonas_almaraz.json"),
+                        StandardCharsets.UTF_8))) {
+
+            StringBuilder sb = new StringBuilder();
+            String linea;
+            while ((linea = br.readLine()) != null) sb.append(linea);
+
+            JSONObject root = new JSONObject(sb.toString());
+            JSONArray arr   = root.getJSONArray("zonas");
+            for (int i = 0; i < arr.length(); i++) {
+                JSONObject z = arr.getJSONObject(i);
+                zonas.add(new Zona(
+                        z.getString("id"),
+                        z.getString("nombre"),
+                        z.optString("tipo", "GENERICO"),
+                        (float) z.getDouble("x"),
+                        (float) z.getDouble("y"),
+                        z.optString("criticidad", "MEDIA")));
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "No se pudo cargar zonas_almaraz.json", e);
+            Toast.makeText(this, "Error al cargar el plano", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    // ===================================================================
+    //   CREACIÓN DINÁMICA DE BOTONES SOBRE EL PLANO
+    // ===================================================================
+
+    private void crearBotonesZona() {
+        botonesZona.clear();
+
+        PlanoCoordMapper mapper = new PlanoCoordMapper(planoImage);
+        if (!mapper.estaPreparado()) return;
+
+        int tamPx = dpAPx(36);  // tamaño del botón en píxeles
+
+        for (Zona z : zonas) {
+            PointF centro = mapper.logicoAPixel(z.x, z.y);
+
+            Button b = new Button(this);
+            b.setText(etiquetaCorta(z));
+            b.setAllCaps(false);
+            b.setTextSize(9f);
+            b.setTextColor(ContextCompat.getColor(this, R.color.white));
+            b.setPadding(0, 0, 0, 0);
+            b.setMinimumWidth(0);
+            b.setMinimumHeight(0);
+            // Fondo circular con borde blanco — definido en bg_boton_zona.xml
+            b.setBackgroundResource(R.drawable.bg_boton_zona);
+            b.setBackgroundTintList(ColorStateList.valueOf(
+                    ContextCompat.getColor(this, R.color.nuclear_blue)));
+
+            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(tamPx, tamPx);
+            lp.gravity = Gravity.TOP | Gravity.START;
+            lp.leftMargin = (int) (centro.x - tamPx / 2f);
+            lp.topMargin  = (int) (centro.y - tamPx / 2f);
+
+            b.setOnClickListener(v -> mostrarFormulario(z.id, z.nombre));
+
+            mapaContainer.addView(b, lp);
+            botonesZona.put(z.id, b);
+        }
+    }
+
+    /** Genera una etiqueta corta a partir del id (zona-reactor-2 → "R-2"). */
+    private String etiquetaCorta(Zona z) {
+        String[] partes = z.id.split("-");
+        if (partes.length < 2) return z.id;
+        StringBuilder sb = new StringBuilder();
+        // Inicial del tipo
+        sb.append(Character.toUpperCase(partes[1].charAt(0)));
+        // Número o letra final si la hay
+        if (partes.length >= 3) sb.append("-").append(partes[2].toUpperCase());
+        return sb.toString();
+    }
+
+    // ===================================================================
+    //   ESTADO DE ZONAS (consulta a /permisos-operativos)
+    // ===================================================================
 
     private void cargarEstadoZonas() {
         progressBar.setVisibility(View.VISIBLE);
@@ -89,26 +200,24 @@ public class PlanoActivity extends AppCompatActivity {
                     progressBar.setVisibility(View.GONE);
                     try {
                         JSONArray permisos = response.getJSONArray("data");
-                        boolean reactorActivo = false;
-                        boolean turbinaActivo = false;
-                        boolean almacenActivo = false;
 
+                        // Reset: ninguna zona activa
+                        for (Button b : botonesZona.values()) {
+                            colorearBoton(b, false);
+                        }
+
+                        // Marcar zonas con permisos en estado activo
                         for (int i = 0; i < permisos.length(); i++) {
                             JSONObject p = permisos.getJSONObject(i);
                             String edificio = p.optString("edificio", "");
-                            String estado = p.optString("estado", "");
+                            String estado   = p.optString("estado", "");
                             if (!ESTADOS_ACTIVOS.contains(estado)) continue;
-
-                            if (ZONA_REACTOR.equals(edificio)) reactorActivo = true;
-                            if (ZONA_TURBINA.equals(edificio)) turbinaActivo = true;
-                            if (ZONA_ALMACEN.equals(edificio)) almacenActivo = true;
+                            Button b = botonesZona.get(edificio);
+                            if (b != null) colorearBoton(b, true);
                         }
-
-                        colorearBoton(btnReactor, reactorActivo);
-                        colorearBoton(btnTurbina, turbinaActivo);
-                        colorearBoton(btnAlmacen, almacenActivo);
-
-                    } catch (Exception ignored) {}
+                    } catch (Exception e) {
+                        Log.e(TAG, "Error al parsear permisos-operativos", e);
+                    }
                 },
                 error -> progressBar.setVisibility(View.GONE));
     }
@@ -119,10 +228,9 @@ public class PlanoActivity extends AppCompatActivity {
         btn.setBackgroundTintList(ColorStateList.valueOf(color));
     }
 
-    private void posicionarBoton(Button btn, float xPct, float yPct) {
-        btn.setX(mapaContainer.getWidth() * xPct);
-        btn.setY(mapaContainer.getHeight() * yPct);
-    }
+    // ===================================================================
+    //   FORMULARIO DE NUEVO PERMISO (sin cambios respecto a v1)
+    // ===================================================================
 
     private void mostrarFormulario(String zoneId, String nombreZona) {
         View vista = getLayoutInflater().inflate(R.layout.dialog_permiso_form, null);
@@ -138,19 +246,18 @@ public class PlanoActivity extends AppCompatActivity {
         EditText etDescripcion = vista.findViewById(R.id.etDescripcion);
 
         CheckBox cbSoldElec = vista.findViewById(R.id.cbSoldaduraElectrica);
-        CheckBox cbSoldTig = vista.findViewById(R.id.cbSoldaduraTig);
+        CheckBox cbSoldTig  = vista.findViewById(R.id.cbSoldaduraTig);
         CheckBox cbCorteRad = vista.findViewById(R.id.cbCorteRadial);
-        CheckBox cbLanza = vista.findViewById(R.id.cbLanzaTermica);
-        CheckBox cbSoplete = vista.findViewById(R.id.cbCorteSoplete);
-        CheckBox cbDisten = vista.findViewById(R.id.cbDistensionado);
-        CheckBox cbOtros = vista.findViewById(R.id.cbOtros);
+        CheckBox cbLanza    = vista.findViewById(R.id.cbLanzaTermica);
+        CheckBox cbSoplete  = vista.findViewById(R.id.cbCorteSoplete);
+        CheckBox cbDisten   = vista.findViewById(R.id.cbDistensionado);
+        CheckBox cbOtros    = vista.findViewById(R.id.cbOtros);
 
-        TextView tvHerramientasLabel = vista.findViewById(R.id.tvHerramientasLabel);
-        ProgressBar progressHerramientas = vista.findViewById(R.id.progressHerramientas);
-        LinearLayout layoutHerramientas = vista.findViewById(R.id.layoutHerramientas);
-        TextView tvHerramientasVacio = vista.findViewById(R.id.tvHerramientasVacio);
+        TextView tvHerramientasLabel       = vista.findViewById(R.id.tvHerramientasLabel);
+        ProgressBar progressHerramientas   = vista.findViewById(R.id.progressHerramientas);
+        LinearLayout layoutHerramientas    = vista.findViewById(R.id.layoutHerramientas);
+        TextView tvHerramientasVacio       = vista.findViewById(R.id.tvHerramientasVacio);
 
-        // Se ejecuta cada vez que cambia cualquier checkbox de tipo de trabajo
         Runnable[] actualizarRef = new Runnable[1];
         actualizarRef[0] = () -> {
             List<String> tipos = tiposSeleccionados(
@@ -300,6 +407,34 @@ public class PlanoActivity extends AppCompatActivity {
         } catch (Exception e) {
             progressBar.setVisibility(View.GONE);
             Toast.makeText(this, "Error al preparar la solicitud", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    // ===================================================================
+    //   UTILIDADES
+    // ===================================================================
+
+    private int dpAPx(int dp) {
+        DisplayMetrics dm = getResources().getDisplayMetrics();
+        return Math.round(dp * dm.density);
+    }
+
+    /** Representa una zona del plano cargada desde el JSON. */
+    private static class Zona {
+        final String id;
+        final String nombre;
+        final String tipo;
+        final float x, y;
+        final String criticidad;
+
+        Zona(String id, String nombre, String tipo,
+             float x, float y, String criticidad) {
+            this.id = id;
+            this.nombre = nombre;
+            this.tipo = tipo;
+            this.x = x;
+            this.y = y;
+            this.criticidad = criticidad;
         }
     }
 }
