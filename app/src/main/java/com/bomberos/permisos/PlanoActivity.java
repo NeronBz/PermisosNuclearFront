@@ -43,16 +43,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-/**
- * PlanoActivity
- * --------------------------------------------------------------------------
- * Muestra el plano esquemático de la CN Almaraz con un botón por cada zona
- * operativa cargada desde assets/zonas_almaraz.json. Al pulsar una zona se
- * abre el formulario de permiso (sin cambios respecto a la versión previa).
- *
- * Los botones se colorean según haya o no permisos activos en esa zona,
- * usando los mismos estados que la actividad anterior.
- */
 public class PlanoActivity extends AppCompatActivity {
 
     private static final String TAG = "PlanoActivity";
