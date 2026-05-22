@@ -9,10 +9,6 @@ import android.os.Build;
 
 import androidx.core.app.NotificationCompat;
 
-/**
- * Receptor de alarma que notifica al usuario cuando supera las horas de turno.
- * Lanzado por AlarmManager desde FichajeActivity.
- */
 public class TurnoAlarmReceiver extends BroadcastReceiver {
 
     @Override

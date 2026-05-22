@@ -57,16 +57,12 @@ public class PlanoActivity extends AppCompatActivity {
     private ApiHelper api;
     private SessionManager session;
 
-    /** Botones generados dinámicamente, indexados por zonaId. */
     private final Map<String, Button> botonesZona = new HashMap<>();
 
-    /** Configuración de zonas cargada desde assets/zonas_almaraz.json. */
     private final List<Zona> zonas = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // Forzar landscape: el plano tiene aspect ratio 3:2 y se aprovecha
-        // mucho mejor en horizontal. El resto de la app sigue en portrait.
         setRequestedOrientation(
                 android.content.pm.ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         super.onCreate(savedInstanceState);
@@ -86,17 +82,11 @@ public class PlanoActivity extends AppCompatActivity {
 
         cargarZonasDesdeAssets();
 
-        // Esperar a que el ImageView tenga dimensiones reales antes de
-        // posicionar los botones encima
         planoImage.post(() -> {
             crearBotonesZona();
             cargarEstadoZonas();
         });
     }
-
-    // ===================================================================
-    //   CARGA DE ZONAS DESDE assets/zonas_almaraz.json
-    // ===================================================================
 
     private void cargarZonasDesdeAssets() {
         zonas.clear();
@@ -126,10 +116,6 @@ public class PlanoActivity extends AppCompatActivity {
             Toast.makeText(this, "Error al cargar el plano", Toast.LENGTH_LONG).show();
         }
     }
-
-    // ===================================================================
-    //   CREACIÓN DINÁMICA DE BOTONES SOBRE EL PLANO
-    // ===================================================================
 
     private void crearBotonesZona() {
         botonesZona.clear();
@@ -167,7 +153,6 @@ public class PlanoActivity extends AppCompatActivity {
         }
     }
 
-    /** Genera una etiqueta corta a partir del id (zona-reactor-2 → "R-2"). */
     private String etiquetaCorta(Zona z) {
         String[] partes = z.id.split("-");
         if (partes.length < 2) return z.id;
@@ -179,10 +164,6 @@ public class PlanoActivity extends AppCompatActivity {
         return sb.toString();
     }
 
-    // ===================================================================
-    //   ESTADO DE ZONAS (consulta a /permisos-operativos)
-    // ===================================================================
-
     private void cargarEstadoZonas() {
         progressBar.setVisibility(View.VISIBLE);
         api.get("permisos-operativos",
@@ -191,12 +172,10 @@ public class PlanoActivity extends AppCompatActivity {
                     try {
                         JSONArray permisos = response.getJSONArray("data");
 
-                        // Reset: ninguna zona activa
                         for (Button b : botonesZona.values()) {
                             colorearBoton(b, false);
                         }
 
-                        // Marcar zonas con permisos en estado activo
                         for (int i = 0; i < permisos.length(); i++) {
                             JSONObject p = permisos.getJSONObject(i);
                             String edificio = p.optString("edificio", "");
@@ -217,10 +196,6 @@ public class PlanoActivity extends AppCompatActivity {
                 activo ? R.color.alert_red : R.color.nuclear_blue);
         btn.setBackgroundTintList(ColorStateList.valueOf(color));
     }
-
-    // ===================================================================
-    //   FORMULARIO DE NUEVO PERMISO (sin cambios respecto a v1)
-    // ===================================================================
 
     private void mostrarFormulario(String zoneId, String nombreZona) {
         View vista = getLayoutInflater().inflate(R.layout.dialog_permiso_form, null);
@@ -400,16 +375,11 @@ public class PlanoActivity extends AppCompatActivity {
         }
     }
 
-    // ===================================================================
-    //   UTILIDADES
-    // ===================================================================
-
     private int dpAPx(int dp) {
         DisplayMetrics dm = getResources().getDisplayMetrics();
         return Math.round(dp * dm.density);
     }
 
-    /** Representa una zona del plano cargada desde el JSON. */
     private static class Zona {
         final String id;
         final String nombre;
